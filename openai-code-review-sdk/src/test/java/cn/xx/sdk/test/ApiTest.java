@@ -9,6 +9,9 @@ package cn.xx.sdk.test;
 
 public class ApiTest {
     public static void main(String[] args) {
-        System.out.println(Integer.parseInt("aaaa"));
+        System.out.println(Integer.parseInt("aaaa1"));
+        System.out.println(Integer.parseInt("aaaa2"));
+        System.out.println(Integer.parseInt("aaaa3"));
+
     }
 }
