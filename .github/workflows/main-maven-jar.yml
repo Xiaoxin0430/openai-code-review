@@ -2,10 +2,10 @@ name: Build and Run OpenAiCodeReview By Maven Jar
 on:
   push:
     branches:
-      - *
+      - '*'
   pull-request:
     branches:
-      - *
+      - '*'
 
 jobs:
   build:
