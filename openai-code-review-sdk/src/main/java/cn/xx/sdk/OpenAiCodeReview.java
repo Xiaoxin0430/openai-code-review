@@ -13,7 +13,7 @@ import java.io.InputStreamReader;
 
 
 public class OpenAiCodeReview {
-    public static void main(String[] args) throws IOException {
+    public static void main(String[] args) throws IOException, InterruptedException {
         System.out.println("请注意倒车");
 
         //代码检出
@@ -30,7 +30,7 @@ public class OpenAiCodeReview {
             sb.append(line);
         }
 
-        int exitCode = process.exitValue();
+        int exitCode = process.waitFor();
         System.out.println("Exited with code " + exitCode);
 
         System.out.println("评审代码" + sb.toString());
