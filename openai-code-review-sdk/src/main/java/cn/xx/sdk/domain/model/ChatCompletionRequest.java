@@ -1,0 +1,24 @@
+package cn.xx.sdk.domain.model;
+
+public class ChatCompletionRequest {
+
+    private String model = Model.QWEN3_7_PLUS.getCode();
+
+    private String input;
+
+    public String getModel() {
+        return model;
+    }
+
+    public void setModel(String model) {
+        this.model = model;
+    }
+
+    public String getInput() {
+        return input;
+    }
+
+    public void setInput(String input) {
+        this.input = input;
+    }
+}
