@@ -4,7 +4,9 @@ package cn.xx.sdk;
 
 import cn.xx.sdk.domain.model.ChatCompletionRequest;
 import cn.xx.sdk.domain.model.ChatCompletionSyncResponse;
+import cn.xx.sdk.domain.model.Message;
 import cn.xx.sdk.domain.model.Model;
+import cn.xx.sdk.types.utils.WXAccessTokenUtils;
 import com.alibaba.fastjson2.JSON;
 import org.eclipse.jgit.api.Git;
 import org.eclipse.jgit.transport.UsernamePasswordCredentialsProvider;
@@ -16,7 +18,7 @@ import java.nio.charset.StandardCharsets;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Random;
-
+import java.util.Scanner;
 
 
 /**
@@ -60,7 +62,48 @@ public class OpenAiCodeReview {
         String logUrl = writeLog(token, log);
         System.out.println("writeLog：" + logUrl);
 
+        // 4. 消息通知
+        System.out.println("pushMessage：" + logUrl);
+        pushMessage(logUrl);
     }
+
+    private static void pushMessage(String logUrl){
+        String accessToken = WXAccessTokenUtils.getAccessToken();
+        System.out.println(accessToken);
+
+        Message message = new Message();
+        message.put("project","big-market");
+        message.put("review",logUrl);
+        message.setUrl(logUrl);
+
+        String url = String.format("https://api.weixin.qq.com/cgi-bin/message/template/send?access_token=%s", accessToken);
+        sendPostRequest(url, JSON.toJSONString(message));
+    }
+
+    private static void sendPostRequest(String urlString, String jsonBody) {
+        try {
+            URL url = new URL(urlString);
+            HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+            conn.setRequestMethod("POST");
+            conn.setRequestProperty("Content-Type", "application/json; utf-8");
+            conn.setRequestProperty("Accept", "application/json");
+            conn.setDoOutput(true);
+
+            try (OutputStream os = conn.getOutputStream()) {
+                byte[] bytes = jsonBody.getBytes(StandardCharsets.UTF_8);
+                os.write(bytes);
+            }
+
+            try (Scanner scanner = new Scanner(conn.getInputStream(), StandardCharsets.UTF_8.name())) {
+                String response = scanner.useDelimiter("\\A").next();
+                System.out.println(response);
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
     private static String codeReview(String diffCode) throws Exception {
 
         String apiKeySecret = "sk-121f3d46be254580bcedc3d692f8ae5a";
