@@ -35,7 +35,32 @@ public class OpenAiCodeReviewService extends AbstractOpenAiCodeReviewService {
         ChatCompletionRequestDTO chatCompletionRequestDTO = new ChatCompletionRequestDTO();
         chatCompletionRequestDTO.setModel(Model.QWEN3_7_PLUS.getCode());
         chatCompletionRequestDTO.setInput(
-                "你是一个高级编程架构师，精通各类场景方案、架构设计和编程语言，请根据 git diff 记录，对代码做出评审。代码如下：\n" + diffCode
+                "你是一个严谨的高级编程架构师，请根据下面的 git diff 做代码评审。\n" +
+                        "要求：\n" +
+                        "1. 必须使用 Markdown 输出。\n" +
+                        "2. 必须严格按照指定格式输出，不要增加额外章节。\n" +
+                        "3. 优先指出可能导致 bug、线上风险、安全问题、性能问题、可维护性问题的内容。\n" +
+                        "4. 如果某个章节没有发现问题，写“无”。\n" +
+                        "5. 建议要具体，尽量指出涉及的类、方法或代码片段。\n\n" +
+                        "输出格式：\n" +
+                        "## 代码评审报告\n\n" +
+                        "### 1. 总体评价\n" +
+                        "- 结论：\n" +
+                        "- 风险等级：低 / 中 / 高\n\n" +
+                        "### 2. 主要问题\n" +
+                        "- 问题：\n" +
+                        "- 影响：\n" +
+                        "- 建议：\n\n" +
+                        "### 3. 潜在风险\n" +
+                        "- 风险：\n" +
+                        "- 建议：\n\n" +
+                        "### 4. 可优化点\n" +
+                        "- 优化点：\n" +
+                        "- 建议：\n\n" +
+                        "### 5. 评审结论\n" +
+                        "- 是否建议合并：是 / 否\n" +
+                        "- 合并前必须处理的问题：\n\n" +
+                        "git diff 如下：\n" + diffCode
         );
 
         ChatCompletionSyncResponseDTO completions = openAI.completions(chatCompletionRequestDTO);
