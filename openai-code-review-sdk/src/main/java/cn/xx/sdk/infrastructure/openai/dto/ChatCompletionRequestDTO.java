@@ -23,7 +23,7 @@ public class ChatCompletionRequestDTO {
         return messages;
     }
 
-    public void setInput(String content) {
+    public void setMessages(String content) {
         Map<String, String> message = new HashMap<>();
         message.put("role", "user");
         message.put("content", content);
