@@ -5,7 +5,17 @@ import java.util.List;
 
 public class ChatCompletionSyncResponseDTO {
 
+    private List<Choice> choices;
+
     private List<Output> output;
+
+    public List<Choice> getChoices() {
+        return choices;
+    }
+
+    public void setChoices(List<Choice> choices) {
+        this.choices = choices;
+    }
 
     public List<Output> getOutput() {
         return output;
@@ -19,6 +29,13 @@ public class ChatCompletionSyncResponseDTO {
      * 直接获取千问最终返回文本
      */
     public String getOutputText() {
+        if (choices != null && !choices.isEmpty()) {
+            Message message = choices.get(0).getMessage();
+            if (message != null) {
+                return message.getContent();
+            }
+        }
+
         if (output == null || output.isEmpty()) {
             return null;
         }
@@ -47,6 +64,39 @@ public class ChatCompletionSyncResponseDTO {
         }
 
         return null;
+    }
+
+    public static class Choice {
+        private Message message;
+
+        public Message getMessage() {
+            return message;
+        }
+
+        public void setMessage(Message message) {
+            this.message = message;
+        }
+    }
+
+    public static class Message {
+        private String role;
+        private String content;
+
+        public String getRole() {
+            return role;
+        }
+
+        public void setRole(String role) {
+            this.role = role;
+        }
+
+        public String getContent() {
+            return content;
+        }
+
+        public void setContent(String content) {
+            this.content = content;
+        }
     }
 
     public static class Output {

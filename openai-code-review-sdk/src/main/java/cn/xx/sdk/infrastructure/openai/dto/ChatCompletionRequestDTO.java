@@ -1,11 +1,15 @@
 package cn.xx.sdk.infrastructure.openai.dto;
 
 import cn.xx.sdk.domain.model.Model;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 public class ChatCompletionRequestDTO {
 
     private String model = Model.QWEN3_7_PLUS.getCode();
 
-    private String input;
+    private List<Map<String, String>> messages;
 
     public String getModel() {
         return model;
@@ -15,11 +19,14 @@ public class ChatCompletionRequestDTO {
         this.model = model;
     }
 
-    public String getInput() {
-        return input;
+    public List<Map<String, String>> getMessages() {
+        return messages;
     }
 
     public void setInput(String content) {
-        this.input = content;
+        Map<String, String> message = new HashMap<>();
+        message.put("role", "user");
+        message.put("content", content);
+        this.messages = Collections.singletonList(message);
     }
 }
