@@ -6,6 +6,7 @@ import cn.xx.sdk.infrastructure.openai.dto.ChatCompletionSyncResponseDTO;
 import com.alibaba.fastjson2.JSON;
 
 import java.io.BufferedReader;
+import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.net.HttpURLConnection;
@@ -41,6 +42,12 @@ public class ChatGLM implements IOpenAI {
         int responseCode = connection.getResponseCode();
         System.out.println(responseCode);
 
+        if (responseCode < HttpURLConnection.HTTP_OK || responseCode >= HttpURLConnection.HTTP_MULT_CHOICE) {
+            String errorContent = readResponse(connection.getErrorStream());
+            connection.disconnect();
+            throw new IOException("OpenAI request failed, responseCode: " + responseCode + ", responseBody: " + errorContent);
+        }
+
         BufferedReader in = new BufferedReader(new InputStreamReader(connection.getInputStream()));
         String inputLine;
 
@@ -53,5 +60,19 @@ public class ChatGLM implements IOpenAI {
         connection.disconnect();
         return JSON.parseObject(content.toString(), ChatCompletionSyncResponseDTO.class);
 
+    }
+
+    private String readResponse(java.io.InputStream inputStream) throws IOException {
+        if (inputStream == null) {
+            return "";
+        }
+        StringBuilder content = new StringBuilder();
+        try (BufferedReader reader = new BufferedReader(new InputStreamReader(inputStream))) {
+            String inputLine;
+            while ((inputLine = reader.readLine()) != null) {
+                content.append(inputLine);
+            }
+        }
+        return content.toString();
     }
 }

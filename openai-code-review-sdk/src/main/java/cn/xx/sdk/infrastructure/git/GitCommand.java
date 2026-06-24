@@ -50,7 +50,7 @@ public class GitCommand {
 
         ProcessBuilder diffProcessBuilder = new ProcessBuilder("git", "diff", latestCommitHash + "^", latestCommitHash);
         diffProcessBuilder.directory(new File("."));
-        Process diffProcess = logProcessBuilder.start();
+        Process diffProcess = diffProcessBuilder.start();
 
         StringBuilder diffcode = new StringBuilder();
         BufferedReader diffReader = new BufferedReader(new InputStreamReader(diffProcess.getInputStream()));
