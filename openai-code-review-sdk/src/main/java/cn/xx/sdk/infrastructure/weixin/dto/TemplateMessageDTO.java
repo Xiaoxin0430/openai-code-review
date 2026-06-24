@@ -27,7 +27,7 @@ public class TemplateMessageDTO {
     }
 
     public static void put(Map<String, Map<String, String>> data, TemplateKey key, String value) {
-        data.put(key, new HashMap<String,String>(){
+        data.put(key.getCode(), new HashMap<String,String>(){
             private static final long serialVersionUID = 7092338402387318563L;
 
             {
