@@ -9,7 +9,7 @@ public class ChatCompletionRequestDTO {
 
     private String model = Model.QWEN3_7_PLUS.getCode();
 
-    private List<Map<String, String>> messages;
+    private String input;
 
     public String getModel() {
         return model;
@@ -19,14 +19,11 @@ public class ChatCompletionRequestDTO {
         this.model = model;
     }
 
-    public List<Map<String, String>> getMessages() {
-        return messages;
+    public String getInput() {
+        return input;
     }
 
-    public void setMessages(String content) {
-        Map<String, String> message = new HashMap<>();
-        message.put("role", "user");
-        message.put("content", content);
-        this.messages = Collections.singletonList(message);
+    public void setInput(String input) {
+        this.input = input;
     }
 }

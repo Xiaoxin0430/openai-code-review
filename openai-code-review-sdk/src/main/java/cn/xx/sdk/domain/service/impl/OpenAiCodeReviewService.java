@@ -34,7 +34,7 @@ public class OpenAiCodeReviewService extends AbstractOpenAiCodeReviewService {
     protected String codeReview(String diffCode) throws Exception {
         ChatCompletionRequestDTO chatCompletionRequestDTO = new ChatCompletionRequestDTO();
         chatCompletionRequestDTO.setModel(Model.QWEN3_7_PLUS.getCode());
-        chatCompletionRequestDTO.setMessages(
+        chatCompletionRequestDTO.setInput(
                 "你是一个高级编程架构师，精通各类场景方案、架构设计和编程语言，请根据 git diff 记录，对代码做出评审。代码如下：\n" + diffCode
         );
 
