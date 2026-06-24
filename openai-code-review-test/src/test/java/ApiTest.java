@@ -1,16 +1,7 @@
-import cn.xx.sdk.domain.model.ChatCompletionSyncResponse;
 import cn.xx.sdk.types.utils.WXAccessTokenUtils;
 import com.alibaba.fastjson.JSON;
-import lombok.extern.slf4j.Slf4j;
 import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.context.annotation.Configuration;
-import org.springframework.test.context.junit4.SpringRunner;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
@@ -18,8 +9,6 @@ import java.nio.charset.StandardCharsets;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Scanner;
-import java.net.*;
-
 
 
 public class ApiTest {

@@ -1,11 +1,9 @@
-package cn.xx.sdk.domain.model;
+package cn.xx.sdk.infrastructure.openai.dto;
 
 
 import java.util.List;
 
-import java.util.List;
-
-public class ChatCompletionSyncResponse {
+public class ChatCompletionSyncResponseDTO {
 
     private List<Output> output;
 

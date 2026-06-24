@@ -1,6 +1,8 @@
-package cn.xx.sdk.domain.model;
+package cn.xx.sdk.infrastructure.openai.dto;
 
-public class ChatCompletionRequest {
+import cn.xx.sdk.domain.model.Model;
+
+public class ChatCompletionRequestDTO {
 
     private String model = Model.QWEN3_7_PLUS.getCode();
 
